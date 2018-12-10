@@ -83,7 +83,7 @@
 								<div class="col-sm-3">
 									<div class="single-item">
 										<div class="single-item-header">
-											<a href="{{route('users.detail',$new->id)}}"><img src="source/image/product/{{$new1->image}}" alt="" height="250px"></a>
+											<a href="{{route('users.detail',$new1->id)}}"><img src="source/image/product/{{$new1->image}}" alt="" height="250px"></a>
 										</div>
 										<div class="single-item-body">
 											<p class="single-item-title">{{$new1->name}}</p>
@@ -93,15 +93,16 @@
 											</p>
 										</div>
 										<div class="single-item-caption">
-											<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-											<a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+											<a class="add-to-cart pull-left" href="{{route('users.add',$new1->id)}}"><i class="fa fa-shopping-cart"></i></a>
+											<a class="beta-btn primary" href="{{route('users.detail',$new1->id)}}">Details <i class="fa fa-chevron-right"></i></a>
 											<div class="clearfix"></div>
 										</div>
 									</div>
                                 </div>
                                 @endforeach
                             </div>
-                            <div class="row">{{$new_product1->links()}}</div>
+                            <div class="row">
+							{{$new_product1->links()}}</div>
 						</div> <!-- .beta-products-list -->
 					</div>
 				</div> <!-- end section with sidebar and main content -->

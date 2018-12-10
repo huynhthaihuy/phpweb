@@ -5,7 +5,13 @@ use App\Slide;
 use App\Product;
 use App\ProductType;
 use App\Cart;
+use App\Customer;
+use App\Bill;
+use App\BillDetail;
+use App\User;
 use Session;
+use Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -34,9 +40,6 @@ class PageController extends Controller
     public function lienhe(){
         return view('page.lienhe');
     }
-    public function gioithieu(){
-        return view('page.gioithieu');
-    }
     //Giỏ Hàng
     public function AddtoCart(Request $request,$id){
         $product = Product::find($id);
@@ -45,5 +48,109 @@ class PageController extends Controller
         $cart->add($product,$id);//thêm phần tử vào giỏ hàng
         $request->session()->put('cart',$cart);
         return redirect()->route('users.index');
+    }
+    public function DelCart($id){
+        $oldCart = Session::has('cart')?Session::get('cart'):null;//xem giỏ hàng
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        if(count($cart->items>0)){       
+        Session::put('cart',$cart);
+        }
+        else{
+            Session::forget('cart');
+        }
+        return redirect()->back();
+    }
+    public function getCheckout(){
+        if(Session::has('cart')){
+            $oldcart = Session::get('cart');
+            $cart = new Cart($oldcart);//kiểm tra giỏ hàng có giỏ hàng mới chưa
+            return view('page.dat_hang',['product_cart' => $cart->items,'totalPrice' => $cart->totalPrice,'totalQty'=>$cart->totalQty]);
+        }
+    }
+    public function postCheckout(Request $request){
+        $cart = Session::get('cart');
+
+        $customer = new Customer;
+        $customer->name = $request->full_name;
+        $customer->gender = $request->gender;
+        $customer->email = $request->email;
+        $customer->address = $request->address;
+        $customer->phone_number = $request->phone;
+        $customer->note = $request->notes;
+        $customer->save();
+
+        $bill = new Bill;
+        $bill->id_customer = $customer->id;
+        $bill->date_order = date('Y-m-d');
+        $bill->total =  $cart->totalPrice;
+        $bill->payment = $request->payment_method;
+        $bill->note = $request->notes;
+        $bill->save();
+
+        foreach($cart->items as $key =>$value){
+        $bill_detail = new BillDetail;
+        $bill_detail->id_bill = $bill->id;
+        $bill_detail->id_product = $key;
+        $bill_detail->quantity = $value['qty'];
+        $bill_detail->unit_price = $value['price']/$value['qty'];
+        $bill_detail->save();
+        }
+        Session::forget('cart');
+        return redirect()->route('users.index');
+    }
+    public function Login(){
+        return view('page.login');
+    }
+    public function SignUp(){
+        return view('page.signup');
+    }
+    public function Store(Request $request)
+    {
+        // $this->validate;
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password'=> $request->password
+        // ]);
+        $user = new User;
+        $user->full_name = $request->full_name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->save();
+        return redirect()->route('users.index');
+    }
+    public function postLogin(Request $req){
+        $this->validate($req,
+            [
+                'email'=>'required|email',
+                'password'=>'required|min:6|max:20'
+            ],
+            [
+                'email.required'=>'Vui lòng nhập email',
+                'email.email'=>'Email không đúng định dạng',
+                'password.required'=>'Vui lòng nhập mật khẩu',
+                'password.min'=>'Mật khẩu ít nhất 6 kí tự',
+                'password.max'=>'Mật khẩu không quá 20 kí tự'
+            ]
+        );
+        $credentials = array('email'=>$req->email,'password'=>$req->password);
+            if(Auth::attempt($credentials)){
+
+            return redirect()->back()->with(['flag'=>'success','message'=>'Đăng nhập thành công']);
+            }
+            else{
+                return redirect()->back()->with(['flag'=>'danger','message'=>'Đăng nhập không thành công']);
+            }
+        }
+    public function Logout(){
+        Auth::logout();
+        return redirect()->route('users.index');
+    }
+    public function Search(Request $request){
+        $product = Product::Where('name','like','%'.$request->search.'%')->get();
+        return view('page.search',compact('product'));
     }
 }
