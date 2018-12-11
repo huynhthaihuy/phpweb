@@ -24,7 +24,7 @@
 						<h4 class="">Contact Us</h4>
 						<div>
 							<div class="contact-info">
-								<i class="fa fa-map-marker"></i>
+							<i class="fas fa-map-marker-alt"></i>
 								<p>K448/67 Trưng Nữ Vương - Hải Châu - Đà Nẵng</p>
 							</div>
 						</div>

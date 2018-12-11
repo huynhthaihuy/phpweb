@@ -32,4 +32,11 @@ Route::get('/dang-ky','PageController@SignUp')->name('users.signup');
 Route::post('/dang-ki', 'PageController@Store')->name('users.store');
 Route::get('/dang-xuat','PageController@Logout')->name('users.logout');
 Route::get('/search','PageController@Search')->name('users.search');
+Route::get('/admin', 'AdminController@index')->name('admins.index');
+Route::get('/admin/create','AdminController@create')->name('admins.create');
+Route::get('/admin/{id}','AdminController@show')->name('admins.show');
+Route::delete('/admin/{id}','AdminController@destroy')->name('admins.destroy');
+Route::post('/admin', 'AdminController@store')->name('admins.store');
+Route::get('/admin/{id}/edit','AdminController@edit')->name('admins.edit');
+Route::put('admin/{id}/updated', 'AdminController@update')->name('admins.update');
 

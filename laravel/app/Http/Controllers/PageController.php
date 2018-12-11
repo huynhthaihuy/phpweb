@@ -107,23 +107,32 @@ class PageController extends Controller
     }
     public function Store(Request $request)
     {
-        // $this->validate;
-        // User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password'=> $request->password
-        // ]);
-        $user = new User;
-        $user->full_name = $request->full_name;
+        $this->validate($request,
+            [
+                'email'=>'required|email|unique:users,email',
+                'password'=>'required|min:6|max:20',
+                'fullname'=>'required',
+                're_password'=>'required|same:password'
+            ],
+            [
+                'email.required'=>'Vui lòng nhập email',
+                'email.email'=>'Không đúng định dạng email',
+                'email.unique'=>'Email đã có người sử dụng',
+                'password.required'=>'Vui lòng nhập mật khẩu',
+                're_password.same'=>'Mật khẩu không giống nhau',
+                'password.min'=>'Mật khẩu ít nhất 6 kí tự'
+            ]);
+        $user = new User();
+        $user->full_name = $request->fullname;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
-        return redirect()->route('users.index');
+        return redirect()->back()->with('thanhcong','Tạo tài khoản thành công');
     }
-    public function postLogin(Request $req){
-        $this->validate($req,
+    public function postLogin(Request $request){
+        $this->validate($request,
             [
                 'email'=>'required|email',
                 'password'=>'required|min:6|max:20'
@@ -136,7 +145,7 @@ class PageController extends Controller
                 'password.max'=>'Mật khẩu không quá 20 kí tự'
             ]
         );
-        $credentials = array('email'=>$req->email,'password'=>$req->password);
+        $credentials = array('email'=>$request->email,'password'=>$request->password);
             if(Auth::attempt($credentials)){
 
             return redirect()->back()->with(['flag'=>'success','message'=>'Đăng nhập thành công']);
