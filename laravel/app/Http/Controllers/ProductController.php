@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\Product;
+use App\ProductType;
 use Hash;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class AdminController extends Controller
         //lay ra 2 du lieu
         //$posts = Post::with('category')->take(2)->get();
         // $users = DB::table('users')->get();
-        $users = User::all();
-        return view('Admin.index', ['users' => $users]);
+        $products = Product::all();
+        return view('Product.index', ['products' => $products]);
     }
 
     /**
@@ -29,7 +30,9 @@ class AdminController extends Controller
     public function create()
     {
         //
-        return view('Admin.create');
+        $products = Product::all();
+        $product_types = ProductType::all();
+        return view('Product.create',['product_types' => $product_types],['products' =>$products]);
     }
 
     /**
@@ -48,14 +51,18 @@ class AdminController extends Controller
         // ]);
         // dd($request->ct_id);
         // dd($request->all());
-        $user = new User;
-        $user->full_name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->save();
-        return redirect()->route('admins.index');
+        $products = Product::create([
+        'name' => $request->name,
+        'id_type' => $request->id_type,
+        'description' => $request->description,
+        'unit_price' => $request->unit_price,
+        'promotion_price'=>$request->promotion_price,
+        'image' => $request->image,
+        'unit' => $request->unit,
+        'new' => $request->new,
+       ]);
+       $products->product_type()->attach($request->product_type);
+       return redirect()->route('products.index');
     }
 
     /**
@@ -66,10 +73,11 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $users = User::find($id);
-        //  dd($users);
-        // $users = DB::table('users')->where('id', $id)->get();
-        return view('Admin.show', ['user' => $users]);
+        $products = Product::with('product_type')->find($id);
+        //  dd($products);
+        // dd($product_type);
+        return view('Product.show', ['product' => $products
+        ]);
     }
 
     /**
@@ -80,10 +88,10 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('Admin.edit', ['user' => $user]);
+        //
+        $products = Product::with('product_type')->find($id);
+        return view('Product.edit', ['product' => $products]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -95,14 +103,15 @@ class AdminController extends Controller
     {
         //
         // dd($request->all());
-        $user = User::find($id);
-        $user->full_name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->save();
-        return redirect()->route('admins.index');
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->unit_price = $request->unit_price;
+        $product->promotion_price = $request->promotion_price;
+        $product->unit = $request->unit;
+        $product->new = $request->new;
+        $product->save();
+        return redirect()->route('products.index');
     }
 
     /**
@@ -113,9 +122,8 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $products = Product::with('product_type')->find($id)->delete();
         // dd($user);
-        $user->delete();
-        return redirect()->route('admins.index');
+        return redirect()->route('products.index');
     }
 }

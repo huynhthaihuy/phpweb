@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-</head>
-<body>
-<div class="Header container text-center">
-    <h1> LARAVEL CRUD USERS EDIT </h1>
+@extends('master')
+@section('content')
+<div id="content" class="Header container text-center">
+    <h1> Chỉnh Sửa Users </h1>
 </div>
 <div class="align-items-center">
-<form action="{{asset('users/'. $post->id.'/updated')}}" method="post">
+<form action="{{asset('admin/'. $user->id.'/updated')}}" method="post">
     <input type="hidden" name="_method" value="put" /> 
     <div class="form-group ">
-    Title: <input type="text" name="title" placeholder="input name" value="{{$post->title}}"><br>
+    Name: <input type="text" name="name" placeholder="input name" value="{{$user->full_name}}"><br>
+    Email: <input type="email" name="email" placeholder="input email" value="{{$user->email}}"><br>
+    Password: <input type="password" name="password" required><br>
+    Phone: <input type="text" name="phone" placeholder="input number" value="{{$user->phone}}"><br>
+    Address: <input type="text" name="address" placeholder="input address" value="{{$user->address}}"><br>
     </div>
     <div class="form-group ">
     <button type="submit">Save</button>
@@ -22,5 +19,4 @@
     </div>
 </form>
 </div>
-</body>
-</html>
+@endsection

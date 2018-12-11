@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //
-    protected $table = "products";
+    protected $fillable = ['name', 'id_type', 'description','unit_price','promotion_price','image','unit','new','created_at','updated_at'];
     public function product_type(){
         return $this->belongsTo('App\ProductType','id_type','id');
     }

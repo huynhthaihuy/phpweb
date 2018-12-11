@@ -16,11 +16,6 @@
 	
 	<div class="container">
 		<div id="content">
-			
-			<form action="{{route('users.store')}}" method="post" class="beta-form-checkout">
-			<input type="hidden" name="_token" value="{{csrf_token()}}">
-				<div class="row">
-					<div class="col-sm-3"></div>
 					@if(count($errors)>0)
 						<div class="alert alert-danger">
 							@foreach($errors->all() as $err)
@@ -31,6 +26,10 @@
 					@if(Session::has('thanhcong'))
 						<div class="alert alert-success">{{Session::get('thanhcong')}}</div>
 					@endif
+			<form action="{{route('users.store')}}" method="post" class="beta-form-checkout">
+			<input type="hidden" name="_token" value="{{csrf_token()}}">
+				<div class="row">
+					<div class="col-sm-3"></div>
 					<div class="col-sm-6">
 						<h4>Đăng kí</h4>
 						<div class="space20">&nbsp;</div>

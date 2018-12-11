@@ -11,6 +11,8 @@
 					<ul class="top-details menu-beta l-inline">
 					@if(Auth::check())
 						<li><a href="#">Chào bạn {{Auth::user()->full_name}}</a></li>
+						<li><a href="{{route('admins.index')}}">Quản Lý Users</a></li>
+						<li><a href="{{route('products.index')}}">Quản Lý Products</a></li>
 						<li><a href="{{route('users.logout')}}">Đăng xuất</a></li>
 					@else
 						<li><a href="{{route('users.signup')}}">Đăng kí</a></li>
