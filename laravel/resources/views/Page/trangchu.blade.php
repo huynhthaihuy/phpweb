@@ -1,27 +1,52 @@
 @extends('master')
 @section('content')
 <div class="fullwidthbanner-container">
-					<div class="fullwidthbanner">
-						<div class="bannercontainer" >
-					    <div class="banner" >
-								<ul>
-                        @foreach($slide as $slide)
-						<!-- THE FIRST SLIDE -->
-						<li data-transition="boxfade" data-slotamount="20" class="active-revslide" style="width: 100%; height: 100%; overflow: hidden; z-index: 18; visibility: hidden; opacity: 0;">
-						<div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
-						<div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="source/image/slide/{{$slide->image}}" data-src="source/image/slide/{{$slide->image}}" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('source/image/slide/{{$slide->image}}'); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;">
-						</div>
-						</div>
-
-                                </li>
-                        @endforeach
-								</ul>
-							</div>
-						</div>
-
-						<div class="tp-bannertimer"></div>
-					</div>
-				</div>
+<div class="Body1--Style container-fluid d-flex justify-content-center px-0 py-0 ">
+        <div id="carouselExampleIndicators" class="Body1--Style carousel slide w-100 h-100" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="Body1--Style carousel-inner header2 d-flex h-100">
+                <div class="Body1--Style carousel-item active">
+                    <img class="d-block w-100 h-100" src="source/image/slide/banner1.jpg" alt="First slide" height="100%">
+                    <div class="carousel-caption h-50 text-center">
+                        <h1 class="Body__Carousel--color">Yamaha</h1>
+                        <form action="{{route('users.contact')}}" method="GET">
+                        <button type="submit" class="btn btn-primary mt-4">Liên Hệ</button>
+						</form>
+                    </div>
+                </div>
+                <div class="Body1--Style carousel-item ">
+                    <img class="d-block w-100 h-100" src="source/image/slide/banner2.jpg" alt="Second slide">
+                    <div class="carousel-caption h-50 text-center">
+                        <h1 class="Body__Carousel--color">Yamaha</h1>
+						<form action="{{route('users.contact')}}" method="GET">
+                        <button type="submit" class="btn btn-primary mt-4">Liên Hệ</button>
+						</form>
+                    </div>
+                </div>
+                <div class="Body1--Style carousel-item">
+                    <img class="d-block w-100 h-100" src="source/image/slide/banner3.jpg" alt="Third slide" height="600px">
+                    <div class="carousel-caption h-50 text-center">
+                        <h1 class="Body__Carousel--color">Yamaha</h1>
+                        <form action="{{route('users.contact')}}" method="GET">
+                        <button type="submit" class="btn btn-primary mt-4">Liên Hệ</button>
+						</form>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
 				<!--slider-->
 	</div>
 	<div class="container">

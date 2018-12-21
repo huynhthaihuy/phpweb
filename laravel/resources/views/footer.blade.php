@@ -38,8 +38,8 @@
 		<div class="container">
 			<p class="pull-left">© 2018 BẢN QUYỀN THUỘC VỀ YAMAHA MOTOR VIỆT NAM.</p>
 			<p class="pull-right pay-options">
-				<a href="#"><img src="source/assets/dest/images/pay/visa.jpg" alt="" /></a>
-				<a href="#"><img src="source/assets/dest/images/pay/paypal.jpg" alt="" /></a>
+				<a href="#"><i class="fa-2x fab fa-cc-visa mt-2"></i></a>
+				<a href="#"><i class="fa-2x far fa-credit-card mt-2"></i></a>
 			</p>
 			<div class="clearfix"></div>
 		</div> <!-- .container -->

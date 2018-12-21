@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="source/assets/dest/css/animate.css">
 	<link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="source/new.css">
+	<link rel="stylesheet" href="source/assets/dest/css/new.css">
     <link rel="stylesheet" href="source/styles.css">
 </head>
 <body>
@@ -47,7 +47,7 @@
 	<script src="source/assets/dest/js/wow.min.js"></script>
 	<!--customjs-->
 	<script src="source/assets/dest/js/custom2.js"></script>
-	<script>
+	<!-- <script>
 	$(document).ready(function($) {    
 		$(window).scroll(function(){
 			if($(this).scrollTop()>150){
@@ -57,6 +57,6 @@
 			}}
 		)
 	})
-	</script>
+	</script> -->
 </body>
 </html>
