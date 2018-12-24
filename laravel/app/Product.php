@@ -15,4 +15,8 @@ class Product extends Model
         return $this->belongsTo('App\BillDetail','id_product','id');
         //khả năng lỗi
     }
+    public function owns($resource)
+    {   
+        return $this->id == $resource->product_id;
+    }
 }

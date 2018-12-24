@@ -51,6 +51,13 @@ class ProductController extends Controller
         // ]);
         // dd($request->ct_id);
         // dd($request->all());
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);      
+       if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $file -> move('source/image/product','file.jpg');
+       }
         $products = Product::create([
         'name' => $request->name,
         'id_type' => $request->id_type,
