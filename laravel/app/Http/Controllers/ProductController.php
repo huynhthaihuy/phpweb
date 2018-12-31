@@ -54,21 +54,33 @@ class ProductController extends Controller
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);      
-       if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $file -> move('source/image/product','file.jpg');
+        $products = new Product;
+        $products->name = $request->name;
+        $products->id_type = $request->id_type;
+        $products->description = $request->description;
+        $products->unit_price = $request->unit_price;
+        $products->promotion_price=$request->promotion_price;
+        $products->image = $request->image;
+        $products->unit = $request->unit;
+        $products->new = $request->new;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/source/image/product');
+            $image->move('source/image/product','file.jpg');
        }
-        $products = Product::create([
-        'name' => $request->name,
-        'id_type' => $request->id_type,
-        'description' => $request->description,
-        'unit_price' => $request->unit_price,
-        'promotion_price'=>$request->promotion_price,
-        'image' => $request->image,
-        'unit' => $request->unit,
-        'new' => $request->new,
-       ]);
-       $products->product_type()->attach($request->product_type);
+        $products->save();
+    //     $products = Product::create([
+    //     'name' => $request->name,
+    //     'id_type' => $request->id_type,
+    //     'description' => $request->description,
+    //     'unit_price' => $request->unit_price,
+    //     'promotion_price'=>$request->promotion_price,
+    //     'image' => $request->file->image,
+    //     'unit' => $request->unit,
+    //     'new' => $request->new,
+    //    ]);
+     $products->product_type()->attach($request->product_type);
        return redirect()->route('products.index');
     }
 
